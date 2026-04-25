@@ -1,14 +1,36 @@
 #include "Combat.h"
-Combat::Combat(Joueur& j ,Monstre& m) : joueur(j), monstre(m) {}
-void Combat::LancerCombat() {
-    monstre.setRencontre(true);
-    cout << "\n[ !!! TRANSITION ECRAN NOIR !!! ]" << endl;
-    cout << "Un " << monstre.getName() << " apparait !" << endl;
+#include "couleurs.h"
+#include "style.h"
 
-    while (joueur.getHP() > 0 && monstre.getHP() > 0) {
+Combat::Combat(Joueur& j ,Monstre& m,TableActions& ta) : joueur(j), monstre(m), tableActions(ta) {}
+
+void Combat::LancerCombat() 
+{
+    style::LogoFight();
+    monstre.setRencontre(true);
+    if (monstre.getCategorie() == "BOSS") {
+        cout << RED << BOLD << "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << RESET << endl;
+        cout << RED << BOLD << "   ALERTE : BOSS " << monstre.getName() << "   " << RESET << endl;
+        cout << RED << BOLD << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" << RESET << endl;
+    } else if (monstre.getCategorie() == "MINIBOSS") {
+        cout << YELLOW << BOLD << "\n-- ATTENTION : " << monstre.getName() << " approche ! --\n" << RESET << endl;
+    } else {
+        cout << "Un " << monstre.getName() << " apparait !" << endl;
+    }
+
+    while (joueur.getHP() > 0 && monstre.getHP() > 0  ) {
+        afficherBarreVie(joueur.getName(), joueur.getHP(), joueur.getHPMax(), BG_GREEN);
+        afficherBarreVie(monstre.getName(), monstre.getHP(), monstre.getHPMax(), BG_RED);
+        afficherBarreSimple(monstre.getMercy(), 100,  BG_BRIGHT_YELLOW);
         afficherMenuCombat();
         int choix;
-        cin >> choix;
+        if (!(cin >> choix)) 
+        {
+            cout << RED << "Entree invalide ! Tapez un NOMBRE." << RESET << endl;
+            cin.clear(); 
+            cin.ignore(10000, '\n'); 
+            continue; 
+        }
 
         if (choix == 1) menuAttaque();
         else if (choix == 2) menuAct();
@@ -21,7 +43,10 @@ void Combat::LancerCombat() {
         if (monstre.getHP() > 0 && !monstre.estEpargnable()) {
             tourMonstre();
         }
+
     }
+    monstre.setHP(monstre.getHPMax());
+    monstre.modifierMercy(-100);
 }
 void Combat::afficherMenuCombat() {
     cout << "\n--- TOUR DE " << joueur.getName() << " ---" << endl;
@@ -31,32 +56,59 @@ void Combat::afficherMenuCombat() {
 }
 
 
-void Combat::menuAttaque() {
+void Combat::menuAttaque()
+ {
+
     int degats = rand() % (monstre.getHPMax() + 1);
     monstre.recevoirDegats(degats);
     cout << "Vous attaquez et faites " << degats << " points de dégats" << endl;
     if (monstre.getHP() <= 0) {
-        cout << "Victoire ! Vous avez vaincu " << monstre.getName() << endl;
+        cout << GREEN << "Victoire ! Vous avez vaincu " << monstre.getName() << RESET << endl;
+        if ((rand() % 100) < 30)
+         {
+                bool dropUnique = false; // ca sera pour les objets uniques plus tard on mettra un CSV pour ca ou dans item.csv
+                if (dropUnique) 
+                {
+                    cout << MAGENTA << "INCROYABLE ! " << monstre.getName() << " a lache un objet unique !" << RESET << endl;
+                } 
+                else
+                {
+                        joueur.dropAleatoire();
+                }
+         }
         joueur.gagnerCombat(true);
+        int xpGagne = monstre.getXpDonne(); 
+        joueur.ajouterXP(xpGagne);
+        monstre.estMort();
     }
 }
 void Combat::menuAct() {
-    monstre.afficherActions();
+
     string choix;
-    cout << "Quelle action faire ?Selectionnez le numero du dialogue choisi : ";
+    cout << "\n--- ACTIONS DISPONIBLES ---" << endl;
     cout << "INSULT | PRIER | MIAM | BOITER | AGENOUILLER | MENACER" << endl;
-    cout << "IMMOBILE | BOULEDENEIGE | CAILLOU | GRRRGAGAGAG | CRIER" << endl;
+    cout << "IMMOBILE | BOULEDENEIGE | CAILLOU | GRRRGAGAGAG | CRIER | MOOH | GLAGLA | GROIN" << endl;
+    cout << "\nQuelle action faire ? (Ecrivez le nom en MAJUSCULE) : ";
     cin >> choix;
+    string nomMonstre = monstre.getName();
+
+    if (tableActions[nomMonstre].count(choix)) {
+
+        ResultatAction res = tableActions[nomMonstre][choix];
+        cout << "\n" << res.message << endl;
+        monstre.modifierMercy(res.points);
+
+        if (res.points > 0) {
+            cout << "[MERCY + " << res.points << "] Le monstre semble sensible a votre action." << endl;
+        } else if (res.points < 0) {
+            cout << "[MERCY " << res.points << "] Oups... Il n'a pas aime du tout !" << endl;
+        }
+    } 
+    else {
+        cout << "\nVous tentez " << choix << "... mais le " << nomMonstre << " vous regarde bizarrement." << endl;
+        cout << "Ca n'a aucun effet." << endl;
+    }
     
-    if (monstre.ComporteAct(choix))
-    {
-        cout << "Vous parlez au" << monstre.getName()<< ", il semble apprécier!" << endl;
-        monstre.modifierMercy(50);
-    }
-    else 
-    {
-        cout << "Ca n'a aucun effet sur ce monstre..." << endl;
-    }
 }
     void Combat::menuItems() {
     joueur.AfficherInventaire();
@@ -70,7 +122,7 @@ void Combat::menuAct() {
     void Combat::menuMercy() {
         if (monstre.estEpargnable()) {
             cout << "Vous epargnez " << monstre.getName() << ". Le combat finit pacifiquement." << endl;
-            monstre.recevoirDegats(monstre.getHP()); // On force la fin du combat
+            monstre.recevoirDegats(monstre.getHP() + 1000000); // On force la fin du combat
             joueur.gagnerCombat(false); // false = épargné
         } 
         else {
@@ -86,6 +138,44 @@ void Combat::Fuite() {
 }
 void Combat::tourMonstre() {
     cout << "\n--- TOUR DU MONSTRE ---" << endl;
-    int degats = rand() % 10 + 1; 
+    int degats =  rand() % (joueur.getHPMax()  /  4 + 1) + joueur.getForce() / 2;
     joueur.recevoirDegats(degats);
+}
+
+void Combat::afficherBarreVie(string nom, int hp, int hpMax, string couleurFond) {
+    int largeurBarre = 20; 
+    float ratio = (hpMax > 0) ? (float)hp / hpMax : 0;
+    int remplissage = (int)(ratio * largeurBarre);
+
+    cout << nom << " [" << hp << "/" << hpMax << "] " << endl;
+    
+    // Partie remplie (Vert ou Rouge)
+    cout << couleurFond; 
+    for (int i = 0; i < remplissage; i++) {
+        cout << " " ; // On affiche des espaces colorés
+    }
+
+    cout << BG_GRAY;  
+    for (int i = 0; i < (largeurBarre - remplissage); i++) {
+        cout << " "; 
+    }
+    
+    cout << RESET << " HP" << endl;
+}
+void Combat::afficherBarreSimple(int actuel, int max, string couleurFond) {
+    int largeurBarre = 18; 
+    float ratio = (max > 0) ? (float)actuel / max : 0;
+    if (ratio > 1) ratio = 1;
+
+    int remplissage = (int)(ratio * largeurBarre);
+    cout << couleurFond; 
+    for (int i = 0; i < remplissage; i++) {
+        cout << " "; 
+    }
+    cout << BG_GRAY; // Fond gris pour la partie vide
+    for (int i = 0; i < (largeurBarre - remplissage); i++) {
+        cout << " "; 
+    }
+    
+    cout << RESET <<  "   Mercy" << endl;
 }

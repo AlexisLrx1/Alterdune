@@ -1,0 +1,23 @@
+Goblin;GRRRGAGAGAG;30;Le Goblin est impressionne par votre cri de guerre.
+Goblin;INSULT;-15;Le Goblin s'enerve et sautille de rage !
+Zombie;MIAM;40;Le Zombie s'arrete de grogner et regarde vos mains avec espoir.
+Zombie;BOITER;20;Le Zombie semble s'identifier a votre demarche.
+Le Gardien;AGENOUILLER;50;Le Gardien baisse son arme par respect pour votre humilite.
+Le Gardien;PRIER;30;Une aura de paix entoure le bouclier du Gardien.
+Le Gardien;MENACER;-100;Le Gardien rugit : 'TU OSERAIS ME DEFIER ?' Sa fureur augmente !
+Squelette;GRRRGAGAGAG;25;Ses os tremblent en rythme avec votre cri.
+Squelette;INSULT;5;Le Squelette n'a pas d'oreilles, il ne comprend pas mais rit quand meme.
+Sanglier;GROIN;50;Vous imitez parfaitement le cri du cochon. Il vous considere comme un ami.
+Golem De Glace;GLAGLA;30;Le monstre vibre. On dirait qu'il essaie de rire dans sa langue.
+Golem De Glace;IMMOBILE;20;Vous ne bougez plus. Le Golem de glace perd tout interet pour vous.
+Golem De Glace;BOULEDENEIGE;40;Vous jouez avec la neige au sol. Le Golem semble amuse.
+Yeti;BOULEDENEIGE;50;Le Yeti attrape la boule de neige et la mange joyeusement.
+Yeti;GLAGLA;20;Le Yeti vous regarde avec une confusion touchante.
+Mammouth;MOOH;60;Le Mammouth barrit de joie et gratte le sol doucement.
+Golem;IMMOBILE;40;Le Golem croit que vous etes une statue de pierre comme lui.
+Golem;CAILLOU;60;Vous lui tendez un joli caillou. Il le place precieusement sur son epaule.
+Chauve Souris;CRIER;50;Votre cri resonne. La chauve-souris est desorientee mais semble vous respecter.
+Araignee;GRRRGAGAGAG;20;L'araignee agite ses mandibules en rythme.
+Araignee;MIAM;40;Vous lui lancez un insecte trouve par terre. Elle commence son festin.
+Colosse de feu;AGENOUILLER;40;La chaleur diminue legerement alors que vous montrez votre respect.
+Colosse de feu;PRIER;40;Les flammes du Colosse passent du rouge au bleu apaisant.

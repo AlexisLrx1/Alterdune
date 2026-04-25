@@ -4,8 +4,8 @@
 
 using namespace std;
 
-Monstre::Monstre(string cat, string nom, int h, int f, int d, int mGoal)
-: Entite(nom,h,0,f,d) , categorie(cat) , mercyGoal(mGoal) {
+Monstre::Monstre(string cat, string nom, int h, int f, int d, int mGoal, int xp)
+: Entite(nom,h,0,f,d) , categorie(cat) , mercyGoal(mGoal), xpDonne(xp) {
     mercyGauge = 0;
 }
 
@@ -30,12 +30,6 @@ bool Monstre::estEpargnable() const {
     return mercyGauge >= mercyGoal;
 }
 
-void Monstre::afficherActions() const {
-    cout << "Actions ACT disponibles pour " << name << " (" << categorie << ") :" << endl;
-    for (size_t i = 0; i < actActions.size(); ++i) {
-        cout << i + 1 << ". " << actActions[i] << endl;
-    }
-}
 
 void Monstre::afficherInfosBestiaire(bool estTue) const {
     cout << "--- " << name << " ---" << endl;
@@ -51,3 +45,5 @@ bool Monstre::ComporteAct(string actionJoueur) const {
     }
     return false;
 }
+
+

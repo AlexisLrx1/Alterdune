@@ -24,7 +24,7 @@ void LectureCSV::chargerItems(const string& fichier, Joueur& joueur) {
             Item item;
             item.nom = tab[0];
             item.type = tab[1];
-            item.valeur = stoi(tab[2]); // ca convertit en entier
+            item.valeur = stoi(tab[2]); // convertit la valeur en entier
             item.quantite = stoi(tab[3]);
             item.rarete ="commun";
             joueur.AjouterItem(item);
@@ -33,27 +33,70 @@ void LectureCSV::chargerItems(const string& fichier, Joueur& joueur) {
     file.close();
 }
 
-vector<Monstre> LectureCSV::chargerMonstres(const string& filename) {
-    vector<Monstre> listeMonstres;
-    ifstream file(filename);
-    if (!file.is_open()) {
-        cerr << "ERREUR : Fichier " << filename << " introuvable ! Arret du jeu." << endl;
-        exit(1);
+vector<Monstre> LectureCSV::chargerMonstres(const string& fichier) {
+    vector<Monstre> bestiaire;
+    ifstream file(fichier);
+    string ligne;
+    if (!file.is_open()) 
+    {
+        return bestiaire;
     }
-    string line;
-    while (getline(file, line)) {
-        vector<string> tab = split(line, ';');
-        if (tab.size() < 6) continue;
-        Monstre m(tab[0], tab[1], stoi(tab[2]), stoi(tab[3]), stoi(tab[4]), stoi(tab[5]));
-        for (int i = 6; i < tab.size(); i++) {
-            if (tab[i] != "-" && !tab[i].empty()) {
-                m.ajouterAction(tab[i]);
-            }
+    while (getline(file, ligne)) 
+    {
+        if (ligne.empty()) continue;
+        
+        vector<string> tokens = split(ligne, ';');
+        if (tokens.size() >= 7) 
+        {
+            string cat = tokens[0];     // CATEGORIE 
+            string nom = tokens[1];     // NOM 
+            int h = stoi(tokens[2]);    // HP 
+            int f = stoi(tokens[3]);    // FORCE (ATK) 
+            int d = stoi(tokens[4]);    // DEFENSE 
+            int mGoal = stoi(tokens[5]); // MERCY GOAL
+            int Xp  = stoi(tokens[6]);  // XP DONNE
+            
+            Monstre m( cat, nom, h, f, d, mGoal, Xp);
+            m.setXpDonne(Xp);
+            
+            bestiaire.push_back(Monstre(cat, nom, h, f, d, mGoal, Xp));
+
+
         }
-        listeMonstres.push_back(m);
     }
     file.close();
-    return listeMonstres;
+    return bestiaire;
+}
+TableActions LectureCSV::chargerActions(const string& fichier) {
+    TableActions table;
+    ifstream file(fichier);
+    string ligne;
+
+    if (!file.is_open()) {
+        cout << "Erreur : Impossible d'ouvrir " << fichier << endl;
+        return table;
+    }
+
+    while (getline(file, ligne)) {
+        if (ligne.empty()) continue;
+
+        stringstream ss(ligne);
+        string nomMonstre, nomAction, pointsStr, message;
+        getline(ss, nomMonstre, ';');
+        getline(ss, nomAction, ';');
+        getline(ss, pointsStr, ';');
+        getline(ss, message, ';');
+
+        if (!nomMonstre.empty() && !nomAction.empty())
+        {
+            ResultatAction res;
+            res.points = stoi(pointsStr);
+            res.message = message;
+            table[nomMonstre][nomAction] = res;
+        }
+    }
+    file.close();
+    return table;
 }
 std::vector<std::vector<int>> LectureCSV::chargerMap(const std::string& fichier) {
     std::vector<std::vector<int>> map;
@@ -72,4 +115,5 @@ std::vector<std::vector<int>> LectureCSV::chargerMap(const std::string& fichier)
     }
     return map;
 }
+
 

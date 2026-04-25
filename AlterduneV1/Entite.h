@@ -12,7 +12,7 @@ protected:
     int hp;
     int hpMax;
     int mp;
-    int mpMax;
+    int mpMax; // je veux rajouter les MP pour les sorts plus tardboule de feux et paralsysie (1 tour sur 2 le monstre ne peut pas attaquer)
     int force;
     int defense;
 
@@ -41,6 +41,19 @@ public:
     { 
         return mpMax;
     }
-
+    int getForce() const 
+    { 
+        return force; 
+    }
+    int getDefense() const 
+    { 
+        return defense;
+    }
+    void setHP(int nouveauHP) 
+    {
+    if (nouveauHP > hpMax) hp = hpMax;
+    else if (nouveauHP < 0) hp = 0;
+    else hp = nouveauHP;
+    }
 };
 #endif

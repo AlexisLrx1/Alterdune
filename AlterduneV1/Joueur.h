@@ -30,6 +30,8 @@ private:
     int bonusDegats;
     string armureNom;
     int bonusDefense;
+    void monterNiveau();
+    
 
 public:
     Joueur(string n);
@@ -37,6 +39,7 @@ public:
     void UtiliserItem(int index);
     void AfficherStats();
     void AfficherInventaire();
+    void ajouterXP(int montant);
     int getNbVictoires() const 
     { 
         return nbVictoires; 
@@ -50,6 +53,7 @@ public:
     { 
         return nbEpargnes; 
     }
-
+    void dropItem(string nomItem, string type, int valeur);
+    void dropAleatoire() ;
 };
 #endif

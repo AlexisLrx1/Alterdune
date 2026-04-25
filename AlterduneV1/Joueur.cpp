@@ -1,4 +1,5 @@
 #include "Joueur.h"
+#include "couleurs.h"
 #include <iostream>
 
 using namespace std;
@@ -10,6 +11,7 @@ Joueur::Joueur(string n) : Entite(n, 100, 20, 10, 5) {
     nbEpargnes = 0;
     MonstresFuit = 0;
     nbVictoires = 0;
+    
     // Equipement de base
     armeNom = "Epée en bois";
     bonusDegats = 0;
@@ -19,9 +21,9 @@ Joueur::Joueur(string n) : Entite(n, 100, 20, 10, 5) {
 void Joueur::AfficherStats() {
     cout << "\n=== STATISTIQUES DE " << name << " ===" << endl;
     cout << "Niveau : " << niveau << " | HP : " << hp << "/" << hpMax << " | MP : " << mp << "/" << mpMax << endl; 
-    cout << "Force : " << force << " | Defense : " << defense + bonusDefense << endl;
+    cout << "Force : " << force << " | Défense : " << defense + bonusDefense << endl;
     cout << "Victoires : " << nbVictoires << "/10" << endl; 
-    cout << "Monstres tues : " << nbMeurtres << " | Epargnes : " << nbEpargnes << endl;
+    cout << "Monstres tués : " << nbMeurtres << " | Epargnés : " << nbEpargnes << endl;
     cout << "Fuites : " << MonstresFuit << endl;
     cout << "Equipement : " << armeNom << " & " << armureNom << endl;
     cout << "============================" << endl;
@@ -70,7 +72,58 @@ void Joueur::gagnerCombat(bool estTue) {
     }
 }
 
+
 void Joueur::AjouterItem(Item item) {
     inventaire.push_back(item);
     cout << "Objet ajoute : " << item.nom << endl;
+}
+void Joueur::ajouterXP(int montant)
+ {
+    xp += montant;
+    cout << "[XP] Vous gagnez " << montant << " points d'experience ! (Total: " << xp << ")" << endl;
+    
+    // Seuil simple : 100 XP par niveau
+    if (xp >= niveau * 100) {
+        monterNiveau();
+    }
+ }
+
+ void Joueur::monterNiveau() {
+    niveau++;
+    xp = 0; 
+    hpMax += 20;
+    hp = hpMax; 
+    force += 5;
+    defense += 2;
+    
+    cout << "\n LEVEL UP ! Vous êtes maintenant niveau " << niveau << " ! " << endl;
+    cout << "Vos PV max augmentent et votre santé est restaurée !" << endl;
+}
+void Joueur::dropItem(string nomItem, string type, int valeur) {
+    for (auto &item : inventaire) {
+        if (item.nom == nomItem) {
+            item.quantite++;
+            cout << YELLOW << "[DROP] Vous avez trouve un(e) " << nomItem << " supplémentaire !" << RESET << endl;
+            return;
+        }
+    }
+    Item nouvelItem;
+    nouvelItem.nom = nomItem;
+    nouvelItem.type = type;
+    nouvelItem.valeur = valeur;
+    nouvelItem.quantite = 1;
+    nouvelItem.rarete = "Commun";
+    
+    inventaire.push_back(nouvelItem);
+    cout << YELLOW << "[DROP] Nouveau butin : " << nomItem << " ajoute a l'inventaire !" << RESET << endl;
+}
+void Joueur::dropAleatoire() {
+    // Liste des objets possibles (on se base sur ceux de ton items.csv)
+    // Plus tard, tu pourras charger cette liste depuis LectureCSV
+    vector<string> objetsPossibles = {"Potion", "Super Potion"};
+
+    int index = rand() % objetsPossibles.size();
+    string nomLoot = objetsPossibles[index];
+    if (nomLoot == "Potion") dropItem("Potion", "HEAL", 15);
+    else if (nomLoot == "Super Potion") dropItem("Super Potion", "HEAL", 30);
 }
