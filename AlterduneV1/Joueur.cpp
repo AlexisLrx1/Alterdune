@@ -50,11 +50,11 @@ void Joueur::UtiliserItem(int index) {
         if (hp > hpMax) hp = hpMax;
         cout << "Vous utilisez " << item.nom << " et recuperez " << item.valeur << " HP !" << endl;
     }
-    // Tu pourras ajouter ici les MP ou les Somniferes plus tard
+    // On fera MP ou les Somniferes plus tard
     
     item.quantite--;
     if (item.quantite <= 0) {
-        inventaire.erase(inventaire.begin() + index); // Retire l'objet si plus de stock
+        inventaire.erase(inventaire.begin() + index); // Retire l'objet si on a plus de stock
     }
 }
 
@@ -82,7 +82,7 @@ void Joueur::ajouterXP(int montant)
     xp += montant;
     cout << "[XP] Vous gagnez " << montant << " points d'experience ! (Total: " << xp << ")" << endl;
     
-    // Seuil simple : 100 XP par niveau
+    
     if (xp >= niveau * 100) {
         monterNiveau();
     }

@@ -98,22 +98,5 @@ TableActions LectureCSV::chargerActions(const string& fichier) {
     file.close();
     return table;
 }
-std::vector<std::vector<int>> LectureCSV::chargerMap(const std::string& fichier) {
-    std::vector<std::vector<int>> map;
-    std::ifstream file(fichier);
-    std::string line;
-
-    while (std::getline(file, line)) {
-        std::vector<int> row;
-        std::stringstream ss(line);
-        std::string value;
-
-        while (std::getline(ss, value, ',')) { // On sépare par la virgule
-            row.push_back(std::stoi(value));
-        }
-        map.push_back(row);
-    }
-    return map;
-}
 
 

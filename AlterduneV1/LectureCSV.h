@@ -18,7 +18,8 @@ struct ResultatAction
     string message;
 };
 
-typedef map<string, map<string, ResultatAction>> TableActions;
+using TableActions = map<string, map<string, ResultatAction>>; // trop long a ecrire donc on fait un alias pour simplifier pour taper.
+
 
 class LectureCSV {
 public:
@@ -26,7 +27,6 @@ public:
     static vector<Monstre> chargerMonstres(const string& fichier);
     static TableActions chargerActions(const string& fichier);
     static vector<string> split(const string& str, char sep);
-    static std::vector<std::vector<int>> chargerMap(const std::string& fichier);
 };
 
 #endif
