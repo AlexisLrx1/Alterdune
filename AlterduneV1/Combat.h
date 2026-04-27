@@ -12,9 +12,9 @@ class Combat {
     TableActions& tableActions;
 
     public:
+    
     Combat(Joueur& j ,Monstre& m,TableActions& ta) ;
     void LancerCombat();
-
 
 private:
     void menuAttaque();

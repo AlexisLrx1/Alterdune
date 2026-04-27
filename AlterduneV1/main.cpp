@@ -11,7 +11,8 @@
 #include "style.h"
 using namespace std;
 
- //g++ *.cpp -o Alterdune.exe && .\\Alterdune.exe" pour compiler et lancer le jeu si pas de bouton run. 
+ //g++ *.cpp -o Alterdune.exe pour compiler 
+ // .\Alterdune
 
    void ClearScreen() 
 { 
@@ -19,21 +20,19 @@ using namespace std;
 }
  
 void AfficherMenu() {
-    cout << "\n--- MENU ALTERDUNE ---" << endl;
-    cout << "1. Partir a l'aventure (Combat)" << endl;
-    cout << "2. Voir mes Statistiques" << endl;
-    cout << "3. Ouvrir l'Inventaire" << endl;
-    cout << "4. Consulter l'Encyclopedie (Bestiaire)" << endl;
-    cout << "5. Sauvegarder et Quitter" << endl;
-    cout << "Choix : ";
+    cout << "1) Partir a l'aventure (Combat)" << endl;
+    cout << "2) Voir mes Statistiques" << endl;
+    cout << "3) Ouvrir l'Inventaire" << endl;
+    cout << "4) Consulter l'Encyclopedie (Bestiaire)" << endl;
+    cout << "5) Sauvegarder et Quitter" << endl;
+    cout << "Quel est votre choix ? : ";
 }
 int main() {
     SetConsoleOutputCP(65001); 
     SetConsoleCP(65001);
     srand(time(0));
-    cout << "==========================================" << endl;
-    cout << "   BIENVENUE DANS LE MONDE D'ALTERDUNE" << endl;
-    cout << "==========================================" << endl;
+   
+    cout << " Bienvenue dans Alterdune." << endl;
     string nom;
     string genre;
     cout << "Entrez votre nom jeune aventurier :";
@@ -91,7 +90,7 @@ int main() {
     } 
     else
     {
-        cout << "Erreur : Aucun monstre de type " << cible << " trouve dans le CSV !" << endl;
+        cout << "Erreur : Aucun monstre de type " << cible << " trouvé dans le CSV !" << endl;
     }
     break;
     }
@@ -103,7 +102,7 @@ int main() {
                 break;
             case 4:
 
-                cout << "\n--- ENCYCLOPEDIE ---" << endl;
+                cout << "\nBestiaire et leurs informations :" << endl;
                 for (int i = 0; i < bestiaire.size(); i++) 
                 {
                     if (bestiaire[i].aEteRencontre()) 
@@ -119,7 +118,7 @@ int main() {
                     } 
                     else 
                     {
-                    cout << "--- ??? --- (Monstre non rencontre)" << endl;
+                    cout << "   ???  (Monstre non rencontre)" << endl;
                     }
                 }
             break;
@@ -127,7 +126,7 @@ int main() {
             cout << "Sauvegarde et fermeture du jeu..." << endl;
             break;
             default:
-            cout << "Ce choix marche pas c'st entre un et cinq pardi!" << endl;
+            cout << "Ce choix marche pas c'est entre un et cinq pardi!" << endl;
             break;
         }
      }
@@ -143,13 +142,13 @@ int main() {
 
     }
     if (joueur.getNbVictoires() >= 10) {
-    cout << "\n=== BILAN DE VOTRE AVENTURE ===" << endl;
+    cout << "\nVoici le bilan de votre aventure :" << endl;
     if (joueur.getNbMeurtres() == 0) {
-        cout << "FIN PACIFISTE : Vous n'avez fait de mal a personne. Le monde est en paix." << endl;
+        cout << "Fin PACIFISTE :  vous cherchez la paix et on vous remercie pour cela." << endl;
     } else if (joueur.getNbMeurtres() >= 10) {
-        cout << "FIN GENOCIDAIRE : Il ne reste plus personne... Vous etes un monstre." << endl;
+        cout << "Fin GENOCIDAIRE : Tuer est votre seul source de satisfaction, qui est réellement le monstre...." << endl;
     } else {
-        cout << "FIN NEUTRE : Vous avez fait des choix difficiles. L'equilibre est maintenu." << endl;
+        cout << "Fin  NEUTRE : Vos choix resultent en un bilan équilibré." << endl;
     }
     }
     return 0;

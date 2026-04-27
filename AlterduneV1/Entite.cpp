@@ -6,11 +6,12 @@ using namespace std;
 Entite::Entite(string n, int h, int m, int f, int d) 
 : name(n), hp(h), hpMax(h), mp(m), mpMax(m), force(f), defense(d) {}
 
-void Entite::recevoirDegats(int degats) {
+void Entite::recevoirDegats(int degats)
+ {
     if (degats <= defense) 
     {
-        cout << name << " a bloque l'attaque !" << endl;
-        hp -= 0; // Pas de degats
+        cout << name << " a bloqué l'attaque ..." << endl;
+        hp -= 0;
         return;
     }
     if (degats > 10000) 

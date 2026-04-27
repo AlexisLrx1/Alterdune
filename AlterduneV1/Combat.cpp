@@ -8,17 +8,23 @@ void Combat::LancerCombat()
 {
     style::LogoFight();
     monstre.setRencontre(true);
-    if (monstre.getCategorie() == "BOSS") {
+    if (monstre.getCategorie() == "BOSS")
+    {
         cout << RED << BOLD << "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << RESET << endl;
         cout << RED << BOLD << "   ALERTE : BOSS " << monstre.getName() << "   " << RESET << endl;
         cout << RED << BOLD << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" << RESET << endl;
-    } else if (monstre.getCategorie() == "MINIBOSS") {
-        cout << YELLOW << BOLD << "\n-- ATTENTION : " << monstre.getName() << " approche ! --\n" << RESET << endl;
-    } else {
+    }
+    else if (monstre.getCategorie() == "MINIBOSS") 
+    {
+        cout << YELLOW << BOLD << "ATTENTION : " << monstre.getName() << " approche ! \n" << RESET << endl;
+    } 
+    else
+    {
         cout << "Un " << monstre.getName() << " apparait !" << endl;
     }
 
-    while (joueur.getHP() > 0 && monstre.getHP() > 0  ) {
+    while (joueur.getHP() > 0 && monstre.getHP() > 0 ) 
+    {
         afficherBarreVie(joueur.getName(), joueur.getHP(), joueur.getHPMax(), BG_GREEN);
         afficherBarreVie(monstre.getName(), monstre.getHP(), monstre.getHPMax(), BG_RED);
         afficherBarreSimple(monstre.getMercy(), 100,  BG_BRIGHT_YELLOW);
@@ -26,7 +32,7 @@ void Combat::LancerCombat()
         int choix;
         if (!(cin >> choix)) 
         {
-            cout << RED << "Entree invalide ! Tapez un NOMBRE." << RESET << endl;
+            cout << RED << "Entree invalide ! Tapez un nombre plutôt." << RESET << endl;
             cin.clear(); 
             cin.ignore(10000, '\n'); 
             continue; 
@@ -48,32 +54,34 @@ void Combat::LancerCombat()
     monstre.setHP(monstre.getHPMax());
     monstre.modifierMercy(-100);
 }
-void Combat::afficherMenuCombat() {
-    cout << "\n--- TOUR DE " << joueur.getName() << " ---" << endl;
-    cout << "HP: " << joueur.getHP() << " | Monstre HP: " << monstre.getHP() << endl;
-    cout << "1. ATTAQUE | 2. ACT | 3. ITEM | 4. MERCY | 5. FUITE" << endl;
-    cout << "Choix : ";
+
+void Combat::afficherMenuCombat()
+ {
+    cout << "\nA toi de jouer " << joueur.getName() << "!" << endl;
+    cout << "HP restant : " << joueur.getHP() << " | Hp du monstre restant : " << monstre.getHP() << endl;
+    cout << "1. Attaquer le monstre" <<  "\n2. Choisir de le persuader"<< "\n3. Inventaire des sorts"<<"\n4. Coup de grâce! (Mercy à 100)" <<"\n5. décder de fuire...." << endl;
+    cout << "Quellle action choisis-tu ? ";
 }
 
 
 void Combat::menuAttaque()
- {
-
+{
     int degats = rand() % (monstre.getHPMax() + 1);
     monstre.recevoirDegats(degats);
     cout << "Vous attaquez et faites " << degats << " points de dégats" << endl;
-    if (monstre.getHP() <= 0) {
+    if (monstre.getHP() <= 0)
+    {
         cout << GREEN << "Victoire ! Vous avez vaincu " << monstre.getName() << RESET << endl;
         if ((rand() % 100) < 30)
          {
-                bool dropUnique = false; // ca sera pour les objets uniques plus tard on mettra un CSV pour ca ou dans item.csv
+                bool dropUnique = false; // je vais faire pour les objets uniques plus tard on mettra un CSV pour ca ou dans item.csv
                 if (dropUnique) 
                 {
                     cout << MAGENTA << "INCROYABLE ! " << monstre.getName() << " a lache un objet unique !" << RESET << endl;
                 } 
                 else
                 {
-                        joueur.dropAleatoire();
+                      joueur.dropAleatoire();
                 }
          }
         joueur.gagnerCombat(true);
@@ -82,12 +90,13 @@ void Combat::menuAttaque()
         monstre.estMort();
     }
 }
-void Combat::menuAct() {
 
+void Combat::menuAct()
+{
     string choix;
-    cout << "\n--- ACTIONS DISPONIBLES ---" << endl;
-    cout << "INSULT | PRIER | MIAM | BOITER | AGENOUILLER | MENACER" << endl;
-    cout << "IMMOBILE | BOULEDENEIGE | CAILLOU | GRRRGAGAGAG | CRIER | MOOH | GLAGLA | GROIN" << endl;
+    cout << "\nVoici les actions disponibles : " << endl;
+    cout << "INSULT, PRIER, MIAM, BOITER, AGENOUILLER, MENACER" << endl;
+    cout << "IMMOBILE, BOULEDENEIGE, CAILLOU, GRRRGAGAGAG, CRIER, MOOH, GLAGLA, GROIN" << endl;
     cout << "\nQuelle action faire ? (Ecrivez le nom en MAJUSCULE) : ";
     cin >> choix;
     string nomMonstre = monstre.getName();
@@ -110,7 +119,8 @@ void Combat::menuAct() {
     }
     
 }
-    void Combat::menuItems() {
+void Combat::menuItems() 
+{
     joueur.AfficherInventaire();
     int choix;
     cout << "Utiliser quel objet (0 pour annuler) ? ";
@@ -119,11 +129,12 @@ void Combat::menuAct() {
         joueur.UtiliserItem(choix - 1);
     }
 }
-    void Combat::menuMercy() {
+ void Combat::menuMercy() 
+ {
         if (monstre.estEpargnable()) {
             cout << "Vous epargnez " << monstre.getName() << ". Le combat finit pacifiquement." << endl;
-            monstre.recevoirDegats(monstre.getHP() + 1000000); // On force la fin du combat
-            joueur.gagnerCombat(false); // false = épargné
+            monstre.recevoirDegats(monstre.getHP() + 1000000); // va falloir qu'on ameliore ca 
+            joueur.gagnerCombat(false); 
         } 
         else {
             cout << "Le monstre ne veut pas encore s'arreter !" << endl;
@@ -137,7 +148,7 @@ void Combat::Fuite() {
     }
 }
 void Combat::tourMonstre() {
-    cout << "\n--- TOUR DU MONSTRE ---" << endl;
+    cout << "\nC'est au tour du monstre !" << endl;
     int degats =  rand() % (joueur.getHPMax()  /  4 + 1) + joueur.getForce() / 2;
     joueur.recevoirDegats(degats);
 }
@@ -148,11 +159,10 @@ void Combat::afficherBarreVie(string nom, int hp, int hpMax, string couleurFond)
     int remplissage = (int)(ratio * largeurBarre);
 
     cout << nom << " [" << hp << "/" << hpMax << "] " << endl;
-    
-    // Partie remplie (Vert ou Rouge)
     cout << couleurFond; 
-    for (int i = 0; i < remplissage; i++) {
-        cout << " " ; // On affiche des espaces colorés
+    for (int i = 0; i < remplissage; i++)
+    {
+        cout << " " ; 
     }
 
     cout << BG_GRAY;  

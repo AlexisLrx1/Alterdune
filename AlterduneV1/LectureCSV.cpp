@@ -2,10 +2,10 @@
 
 vector<string> LectureCSV::split(const string& str, char sep) {
     vector<string> resultat;
-    stringstream stringS(str);
+    stringstream chaine(str);
     string item;
 
-    while (getline(stringS, item, sep)) {
+    while (getline(chaine, item, sep)) {
         resultat.push_back(item);
     }
     return resultat;
@@ -20,11 +20,11 @@ void LectureCSV::chargerItems(const string& fichier, Joueur& joueur) {
     string line;
     while (getline(file, line)) {
         vector<string> tab = split(line, ';');
-        if (tab.size() >= 4) { // il faut nom,type,valeur et quantite
+        if (tab.size() >= 4) { 
             Item item;
             item.nom = tab[0];
             item.type = tab[1];
-            item.valeur = stoi(tab[2]); // convertit la valeur en entier
+            item.valeur = stoi(tab[2]); 
             item.quantite = stoi(tab[3]);
             item.rarete ="commun";
             joueur.AjouterItem(item);
@@ -45,22 +45,20 @@ vector<Monstre> LectureCSV::chargerMonstres(const string& fichier) {
     {
         if (ligne.empty()) continue;
         
-        vector<string> tokens = split(ligne, ';');
-        if (tokens.size() >= 7) 
+        vector<string> tab = split(ligne, ';');
+        if (tab.size() >= 7) 
         {
-            string cat = tokens[0];     // CATEGORIE 
-            string nom = tokens[1];     // NOM 
-            int h = stoi(tokens[2]);    // HP 
-            int f = stoi(tokens[3]);    // FORCE (ATK) 
-            int d = stoi(tokens[4]);    // DEFENSE 
-            int mGoal = stoi(tokens[5]); // MERCY GOAL
-            int Xp  = stoi(tokens[6]);  // XP DONNE
+            string cat = tab[0];     
+            string nom = tab[1];     
+            int h = stoi(tab[2]);    
+            int f = stoi(tab[3]);    
+            int d = stoi(tab[4]);    
+            int mGoal = stoi(tab[5]); 
+            int Xp  = stoi(tab[6]);  
             
             Monstre m( cat, nom, h, f, d, mGoal, Xp);
             m.setXpDonne(Xp);
-            
             bestiaire.push_back(Monstre(cat, nom, h, f, d, mGoal, Xp));
-
 
         }
     }
@@ -89,10 +87,10 @@ TableActions LectureCSV::chargerActions(const string& fichier) {
 
         if (!nomMonstre.empty() && !nomAction.empty())
         {
-            ResultatAction res;
-            res.points = stoi(pointsStr);
-            res.message = message;
-            table[nomMonstre][nomAction] = res;
+            ResultatAction resultat;
+            resultat.points = stoi(pointsStr);
+            resultat.message = message;
+            table[nomMonstre][nomAction] = resultat;
         }
     }
     file.close();

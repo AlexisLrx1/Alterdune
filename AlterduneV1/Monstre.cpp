@@ -32,7 +32,7 @@ bool Monstre::estEpargnable() const {
 
 
 void Monstre::afficherInfosBestiaire(bool estTue) const {
-    cout << "--- " << name << " ---" << endl;
+    cout << name << "  :" << endl;
     cout << "Categorie : " << categorie << endl; 
     cout << "Stats Finales : HP Max " << hpMax << " | ATK " << force << " | DEF " << defense << endl;
     cout << "Resultat : " << (estTue ? "TUE" : "EPARGNE") << endl;

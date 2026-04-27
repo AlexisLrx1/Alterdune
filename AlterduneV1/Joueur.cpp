@@ -19,17 +19,16 @@ Joueur::Joueur(string n) : Entite(n, 100, 20, 10, 5) {
     bonusDefense = 2;
 }
 void Joueur::AfficherStats() {
-    cout << "\n=== STATISTIQUES DE " << name << " ===" << endl;
+    cout << "\nStatistiques de " << name  << endl;
     cout << "Niveau : " << niveau << " | HP : " << hp << "/" << hpMax << " | MP : " << mp << "/" << mpMax << endl; 
     cout << "Force : " << force << " | Défense : " << defense + bonusDefense << endl;
     cout << "Victoires : " << nbVictoires << "/10" << endl; 
     cout << "Monstres tués : " << nbMeurtres << " | Epargnés : " << nbEpargnes << endl;
     cout << "Fuites : " << MonstresFuit << endl;
     cout << "Equipement : " << armeNom << " & " << armureNom << endl;
-    cout << "============================" << endl;
 }
 void Joueur::AfficherInventaire() {
-    cout << "\n=== INVENTAIRE (" << inventaire.size() << "/20) ===" << endl; 
+    cout << "\nIVotre inventaire (" << inventaire.size() << " objets)" << endl; 
     if (inventaire.empty()) {
         cout << "Votre sac est vide." << endl;
     } else {
@@ -103,7 +102,7 @@ void Joueur::dropItem(string nomItem, string type, int valeur) {
     for (auto &item : inventaire) {
         if (item.nom == nomItem) {
             item.quantite++;
-            cout << YELLOW << "[DROP] Vous avez trouve un(e) " << nomItem << " supplémentaire !" << RESET << endl;
+            cout << YELLOW << "[DROP] Vous avez trouve une " << nomItem << " supplémentaire !" << RESET << endl;
             return;
         }
     }
@@ -115,11 +114,9 @@ void Joueur::dropItem(string nomItem, string type, int valeur) {
     nouvelItem.rarete = "Commun";
     
     inventaire.push_back(nouvelItem);
-    cout << YELLOW << "[DROP] Nouveau butin : " << nomItem << " ajoute a l'inventaire !" << RESET << endl;
+    cout << YELLOW << "Nouveau butin : " << nomItem << " ajouté a l'inventaire !" << RESET << endl;
 }
 void Joueur::dropAleatoire() {
-    // Liste des objets possibles (on se base sur ceux de ton items.csv)
-    // Plus tard, tu pourras charger cette liste depuis LectureCSV
     vector<string> objetsPossibles = {"Potion", "Super Potion"};
 
     int index = rand() % objetsPossibles.size();
