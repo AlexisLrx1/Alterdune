@@ -12,7 +12,7 @@ protected:
     int hp;
     int hpMax;
     int mp;
-    int mpMax; // je veux rajouter les MP pour les sorts plus tardboule de feux et paralsysie (1 tour sur 2 le monstre ne peut pas attaquer)
+    int mpMax; 
     int force;
     int defense;
 

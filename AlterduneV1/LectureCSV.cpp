@@ -1,16 +1,17 @@
 #include "LectureCSV.h"
 
-vector<string> LectureCSV::split(const string& str, char sep) {
+vector<string> LectureCSV::split(const string& str, char sep) 
+{
     vector<string> resultat;
     stringstream chaine(str);
     string item;
-
     while (getline(chaine, item, sep)) {
         resultat.push_back(item);
     }
     return resultat;
 }
-void LectureCSV::chargerItems(const string& fichier, Joueur& joueur) {
+void LectureCSV::chargerItems(const string& fichier, Joueur& joueur) 
+{
     ifstream file(fichier);
     if (!file.is_open()) {
         cerr << "Erreur lors de l'ouverture du fichier: " << fichier << endl;
@@ -33,7 +34,8 @@ void LectureCSV::chargerItems(const string& fichier, Joueur& joueur) {
     file.close();
 }
 
-vector<Monstre> LectureCSV::chargerMonstres(const string& fichier) {
+vector<Monstre> LectureCSV::chargerMonstres(const string& fichier)
+{
     vector<Monstre> bestiaire;
     ifstream file(fichier);
     string ligne;
@@ -48,7 +50,7 @@ vector<Monstre> LectureCSV::chargerMonstres(const string& fichier) {
         vector<string> tab = split(ligne, ';');
         if (tab.size() >= 7) 
         {
-            string cat = tab[0];     
+            string cat = tab[0];    
             string nom = tab[1];     
             int h = stoi(tab[2]);    
             int f = stoi(tab[3]);    
@@ -65,7 +67,9 @@ vector<Monstre> LectureCSV::chargerMonstres(const string& fichier) {
     file.close();
     return bestiaire;
 }
-TableActions LectureCSV::chargerActions(const string& fichier) {
+
+TableActions LectureCSV::chargerActions(const string& fichier) 
+{
     TableActions table;
     ifstream file(fichier);
     string ligne;
@@ -75,9 +79,9 @@ TableActions LectureCSV::chargerActions(const string& fichier) {
         return table;
     }
 
-    while (getline(file, ligne)) {
+    while (getline(file, ligne)) 
+    {
         if (ligne.empty()) continue;
-
         stringstream ss(ligne);
         string nomMonstre, nomAction, pointsStr, message;
         getline(ss, nomMonstre, ';');

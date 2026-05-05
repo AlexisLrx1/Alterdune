@@ -8,8 +8,8 @@ using namespace std;
 
 class Monstre : public Entite {
 private:
-    string categorie; //mini boss ou boss ou normal
-    int mercyGauge;   // Jauge actuelle (0 à 100) 
+    string categorie; 
+    int mercyGauge;   
     int mercyGoal;
     int xpDonne;
     int  compteur = 0;
@@ -17,6 +17,7 @@ private:
     bool rencontre = false;
       
 public:
+
     Monstre(string cat, string nom, int h, int f, int d, int mGoal , int xp);
     void modifierMercy(int valeur); 
     bool estEpargnable() const;

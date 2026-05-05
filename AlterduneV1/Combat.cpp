@@ -38,7 +38,11 @@ void Combat::LancerCombat()
             continue; 
         }
 
-        if (choix == 1) menuAttaque();
+        if (choix == 1)
+        {
+            menuAttaque();
+            if (monstre.getHP() <= 0) return;
+        } 
         else if (choix == 2) menuAct();
         else if (choix == 3) menuItems();
         else if (choix == 4) menuMercy();
@@ -52,14 +56,13 @@ void Combat::LancerCombat()
 
     }
     monstre.setHP(monstre.getHPMax());
-    monstre.modifierMercy(-100);
 }
 
 void Combat::afficherMenuCombat()
  {
     cout << "\nA toi de jouer " << joueur.getName() << "!" << endl;
     cout << "HP restant : " << joueur.getHP() << " | Hp du monstre restant : " << monstre.getHP() << endl;
-    cout << "1. Attaquer le monstre" <<  "\n2. Choisir de le persuader"<< "\n3. Inventaire des sorts"<<"\n4. Coup de grâce! (Mercy à 100)" <<"\n5. décder de fuire...." << endl;
+    cout << "\n1. Attaquer le monstre" <<  "\n2. Choisir de le persuader"<< "\n3. Inventaire des sorts"<<"\n4. Coup de grâce! (Mercy à 100)" <<"\n5. décder de fuire...." << endl;
     cout << "Quellle action choisis-tu ? ";
 }
 
@@ -74,7 +77,7 @@ void Combat::menuAttaque()
         cout << GREEN << "Victoire ! Vous avez vaincu " << monstre.getName() << RESET << endl;
         if ((rand() % 100) < 30)
          {
-                bool dropUnique = false; // je vais faire pour les objets uniques plus tard on mettra un CSV pour ca ou dans item.csv
+                bool dropUnique = false; 
                 if (dropUnique) 
                 {
                     cout << MAGENTA << "INCROYABLE ! " << monstre.getName() << " a lache un objet unique !" << RESET << endl;
@@ -126,34 +129,42 @@ void Combat::menuItems()
     cout << "Utiliser quel objet (0 pour annuler) ? ";
     cin >> choix;
     if (choix > 0) {
-        joueur.UtiliserItem(choix - 1);
+        joueur.UtiliserItem(choix - 1, &monstre);
     }
 }
  void Combat::menuMercy() 
  {
         if (monstre.estEpargnable()) {
             cout << "Vous epargnez " << monstre.getName() << ". Le combat finit pacifiquement." << endl;
-            monstre.recevoirDegats(monstre.getHP() + 1000000); // va falloir qu'on ameliore ca 
+            monstre.setHP(0);
             joueur.gagnerCombat(false); 
+            monstre.modifierMercy(-100);
         } 
         else {
             cout << "Le monstre ne veut pas encore s'arreter !" << endl;
         }
     }
-void Combat::Fuite() {
-    if (monstre.getCategorie() == "BOSS") {
+void Combat::Fuite() 
+{
+    if (monstre.getCategorie() == "BOSS")
+     {
         cout << "Impossible de fuir face a un BOSS voyons!" << endl;
-    } else {
+    } 
+    else
+    {
         cout << "Vous prenez la fuite..." << endl;
+        joueur.compteurFuite();
     }
 }
-void Combat::tourMonstre() {
+void Combat::tourMonstre()
+{
     cout << "\nC'est au tour du monstre !" << endl;
     int degats =  rand() % (joueur.getHPMax()  /  4 + 1) + joueur.getForce() / 2;
     joueur.recevoirDegats(degats);
 }
 
-void Combat::afficherBarreVie(string nom, int hp, int hpMax, string couleurFond) {
+void Combat::afficherBarreVie(string nom, int hp, int hpMax, string couleurFond)
+{
     int largeurBarre = 20; 
     float ratio = (hpMax > 0) ? (float)hp / hpMax : 0;
     int remplissage = (int)(ratio * largeurBarre);

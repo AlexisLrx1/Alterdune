@@ -12,30 +12,34 @@
 using namespace std;
 
  //g++ *.cpp -o Alterdune.exe pour compiler 
- // .\Alterdune
+ // .\Alterdune pour lancer
 
-   void ClearScreen() 
+void ClearScreen() 
 { 
     cout << "\033[2J\033[1;1H";
 }
  
-void AfficherMenu() {
-    cout << "1) Partir a l'aventure (Combat)" << endl;
+void AfficherMenu() 
+{
+    cout << "\n1) Partir a l'aventure (Combat)" << endl;
     cout << "2) Voir mes Statistiques" << endl;
     cout << "3) Ouvrir l'Inventaire" << endl;
     cout << "4) Consulter l'Encyclopedie (Bestiaire)" << endl;
     cout << "5) Sauvegarder et Quitter" << endl;
     cout << "Quel est votre choix ? : ";
 }
+
+
 int main() {
     SetConsoleOutputCP(65001); 
     SetConsoleCP(65001);
     srand(time(0));
-   
-    cout << " Bienvenue dans Alterdune." << endl;
+    ClearScreen();
+    style::LogoAlterdune();
+    cout << "Bienvenue dans Alterdune." << endl;
     string nom;
     string genre;
-    cout << "Entrez votre nom jeune aventurier :";
+    cout << "Entrez votre nom jeune aventurier : ";
     cin >> nom;
     cout << "\n";
     ClearScreen();
@@ -51,8 +55,8 @@ int main() {
     int choix = 0;
     bool tue = false;
  
-    while (choix != 5 && joueur.getHP() > 0 && joueur.getNbVictoires() < 10) {
-        
+    while (choix != 5 && joueur.getHP() > 0 && joueur.getNbVictoires() < 10) 
+    {
         AfficherMenu();
         if (!(cin >> choix)) 
         {
@@ -62,38 +66,39 @@ int main() {
              continue; 
         }
         ClearScreen();
-        switch (choix) {
+        switch (choix) 
+        {
             case 1:
-             { 
+           { 
+
                 cout << "\n[LANCEMENT D'UN COMBAT...]" << endl;
                  int progression = joueur.getNbVictoires() + 1;
                  string cible = "NORMAL";
                  if (progression == 10) cible = "BOSS";
                  else if (progression == 5) cible = "MINIBOSS";
                  vector<int> selection;
-                 for (int i = 0; i < bestiaire.size(); i++) {
-                  if (bestiaire[i].getCategorie() == cible)
+                 for (int i = 0; i < bestiaire.size(); i++)
                   {
-                
-                    selection.push_back(i);
+                        if (bestiaire[i].getCategorie() == cible)
+                        {    
+                                selection.push_back(i);
+                        }
                  }
-         }
 
-    if (!selection.empty())
-     {
-        int indexAleatoire = selection[rand() % selection.size()];
-        Monstre& monstreCombat = bestiaire[indexAleatoire]; 
-        monstreCombat.setRencontre(true);
-        Combat combat(joueur, monstreCombat, tableActions); 
-        combat.LancerCombat();   
-
-    } 
-    else
-    {
-        cout << "Erreur : Aucun monstre de type " << cible << " trouvé dans le CSV !" << endl;
-    }
-    break;
-    }
+                 if (!selection.empty())
+                 {
+                    int indexAleatoire = selection[rand() % selection.size()];
+                    Monstre& monstreCombat = bestiaire[indexAleatoire]; 
+                    monstreCombat.setRencontre(true);
+                    Combat combat(joueur, monstreCombat, tableActions); 
+                    combat.LancerCombat();   
+                }
+                else
+                {
+                    cout << "Erreur : Aucun monstre de type " << cible << " trouvé dans le CSV !" << endl;
+                }
+                break;
+           }
             case 2:
                 joueur.AfficherStats();
                 break;
@@ -132,25 +137,32 @@ int main() {
      }
     
     
-    if (joueur.getNbVictoires() >= 10) {
+    if (joueur.getNbVictoires() >= 10) 
+    {
         cout << "\nFélicitations ! Tu as terminé l'aventure." << endl;
     } 
-    else if (joueur.getHP() <= 0) {
+    else if (joueur.getHP() <= 0)
+    {
         ClearScreen();
         cout << "\nTu as été vaincu... Mieux vaut se reposer et retenter l'aventure plus tard." << endl;
         style::LogoLose();
 
     }
-    if (joueur.getNbVictoires() >= 10) {
-    cout << "\nVoici le bilan de votre aventure :" << endl;
-    if (joueur.getNbMeurtres() == 0) {
-        cout << "Fin PACIFISTE :  vous cherchez la paix et on vous remercie pour cela." << endl;
-    } else if (joueur.getNbMeurtres() >= 10) {
+    if (joueur.getNbVictoires() >= 10) 
+    {
+        cout << "\nVoici le bilan de votre aventure :" << endl;
+        if (joueur.getNbMeurtres() == 0)
+        {
+            cout << "Fin PACIFISTE :  vous cherchez la paix et on vous remercie pour cela." << endl;
+        } 
+        else if (joueur.getNbMeurtres() >= 10) 
+        {
         cout << "Fin GENOCIDAIRE : Tuer est votre seul source de satisfaction, qui est réellement le monstre...." << endl;
-    } else {
+        } 
+        else 
+        {
         cout << "Fin  NEUTRE : Vos choix resultent en un bilan équilibré." << endl;
-    }
+        }
     }
     return 0;
-
 }

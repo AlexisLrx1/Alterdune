@@ -21,7 +21,9 @@ struct ResultatAction
 using TableActions = map<string, map<string, ResultatAction>>; // trop long a ecrire donc on fait un alias pour simplifier pour taper.
 
 
-class LectureCSV {
+class LectureCSV
+{
+    
 public:
     static void chargerItems(const string& fichier, Joueur& joueur);
     static vector<Monstre> chargerMonstres(const string& fichier);

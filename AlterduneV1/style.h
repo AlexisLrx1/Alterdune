@@ -10,6 +10,8 @@ public:
     static void LogoGenre();
     static void LogoFight();
     static void LogoLose();
+    static void LogoAlterdune();
+
     
 };
 #endif

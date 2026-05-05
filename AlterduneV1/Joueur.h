@@ -14,29 +14,22 @@ struct Item {
 
 class Joueur : public Entite {
 private:
-    // Stat perso
+
     int niveau;
     int xp;
     int MonstresFuit;
     int nbVictoires;
     int nbMeurtres = 0;
     int nbEpargnes = 0;
-
-    // inventaire (on utilise vector)
     vector<Item> inventaire;
 
-    // Equipemen Armure et Arme
-    string armeNom;
-    int bonusDegats;
-    string armureNom;
-    int bonusDefense;
     void monterNiveau();
     
 
 public:
     Joueur(string n);
     void AjouterItem(Item item);
-    void UtiliserItem(int index);
+    void UtiliserItem(int index, Entite* cible);
     void AfficherStats();
     void AfficherInventaire();
     void ajouterXP(int montant);
@@ -55,5 +48,9 @@ public:
     }
     void dropItem(string nomItem, string type, int valeur);
     void dropAleatoire() ;
+    void compteurFuite() 
+    {
+        MonstresFuit++;
+    }
 };
 #endif
