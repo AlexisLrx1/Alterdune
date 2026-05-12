@@ -1,23 +1,32 @@
-Goblin;GRRRGAGAGAG;30;Le Goblin est impressionne par votre cri de guerre.
-Goblin;INSULT;-15;Le Goblin s'enerve et sautille de rage !
-Zombie;MIAM;40;Le Zombie s'arrete de grogner et regarde vos mains avec espoir.
-Zombie;BOITER;20;Le Zombie semble s'identifier a votre demarche.
-Le Gardien;AGENOUILLER;50;Le Gardien baisse son arme par respect pour votre humilite.
-Le Gardien;PRIER;30;Une aura de paix entoure le bouclier du Gardien.
-Le Gardien;MENACER;-100;Le Gardien rugit : 'TU OSERAIS ME DEFIER ?' Sa fureur augmente !
-Squelette;GRRRGAGAGAG;25;Ses os tremblent en rythme avec votre cri.
-Squelette;INSULT;5;Le Squelette n'a pas d'oreilles, il ne comprend pas mais rit quand meme.
-Sanglier;GROIN;50;Vous imitez parfaitement le cri du cochon. Il vous considere comme un ami.
-Golem De Glace;GLAGLA;30;Le monstre vibre. On dirait qu'il essaie de rire dans sa langue.
-Golem De Glace;IMMOBILE;20;Vous ne bougez plus. Le Golem de glace perd tout interet pour vous.
-Golem De Glace;BOULEDENEIGE;40;Vous jouez avec la neige au sol. Le Golem semble amuse.
-Yeti;BOULEDENEIGE;50;Le Yeti attrape la boule de neige et la mange joyeusement.
-Yeti;GLAGLA;20;Le Yeti vous regarde avec une confusion touchante.
-Mammouth;MOOH;60;Le Mammouth barrit de joie et gratte le sol doucement.
-Golem;IMMOBILE;40;Le Golem croit que vous etes une statue de pierre comme lui.
-Golem;CAILLOU;60;Vous lui tendez un joli caillou. Il le place precieusement sur son epaule.
-Chauve Souris;CRIER;50;Votre cri resonne. La chauve-souris est desorientee mais semble vous respecter.
-Araignee;GRRRGAGAGAG;20;L'araignee agite ses mandibules en rythme.
-Araignee;MIAM;40;Vous lui lancez un insecte trouve par terre. Elle commence son festin.
-Colosse de feu;AGENOUILLER;40;La chaleur diminue legerement alors que vous montrez votre respect.
-Colosse de feu;PRIER;40;Les flammes du Colosse passent du rouge au bleu apaisant.
+Goblin;INSULT;-20;Le Goblin s'énerve et resserre sa prise sur sa massue !
+Goblin;MENACER;50;Le Goblin est lâche, il commence à trembler de peur.
+Zombie;MIAM;40;Vous lui offrez un vieux morceau de viande. Il oublie de vous mordre.
+Zombie;CRIER;-10;Le Zombie ne comprend pas, mais le bruit lui fait mal aux oreilles.
+Squelette;BOITER;40;Vous imitez sa démarche. Il trouve ça hilarant (pour un mort).
+Squelette;INSULT;-30;Vous faites une blague sur les os. C'est déplacé.
+Sanglier;MOOH;10;Vous imitez une vache. Le sanglier est confus.
+Sanglier;CRIER;40;Votre cri sauvage l'impressionne, il vous respecte.
+Yeti;GLAGLA;50;Vous tremblez de froid. Le Yeti veut vous faire un câlin protecteur.
+Yeti;MENACER;-30;Il n'aime pas les intrus sur son territoire.
+Mammouth;PRIER;40;Vous montrez du respect pour cette créature ancienne.
+Mammouth;MOOH;20;Il croit reconnaître un lointain cousin.
+Chauve Souris;CRIER;-30;Les ultrasons se mélangent, elle devient furieuse !
+Chauve Souris;IMMOBILE;40;Elle ne vous repère plus et se calme.
+Araignee;AGENOUILLER;30;Vous saluez la reine de la toile. Elle apprécie.
+Araignee;INSULT;-20;Vous dites que ses toiles sont collantes. Elle s'offusque.
+
+Golem De Glace;GLAGLA;40;Le froid vous gagne. Le Golem ralentit ses attaques par empathie.
+Golem De Glace;CAILLOU;-20;Le caillou rebondit sur son armure de glace. Il grogne.
+Golem De Glace;IMMOBILE;50;Vous devenez une statue. Il pense que vous faites partie du décor.
+Golem;AGENOUILLER;40;Vous reconnaissez sa puissance de pierre.
+Golem;CAILLOU;10;Vous lui rendez son caillou. Il vous regarde bizarrement.
+Golem;MENACER;-50;On ne menace pas une montagne. Il s'énerve sérieusement.
+
+Le Gardien;PRIER;30;Une aura sacrée se dégage. Le Gardien hésite à frapper.
+Le Gardien;INSULT;-40;Il prend son rôle très au sérieux, vos insultes le rendent furieux.
+Le Gardien;AGENOUILLER;40;Votre soumission flatte son sens du devoir.
+Le Gardien;CRIER;20;Votre détermination résonne dans la salle.
+Colosse de feu;CRIER;30;Vous hurlez pour couvrir le crépitement des flammes.
+Colosse de feu;MENACER;-40;Il s'embrase de plus belle face à votre hostilité !
+Colosse de feu;AGENOUILLER;50;La chaleur est insupportable, votre humilité le calme.
+Colosse de feu;GRRRGAGAGAG;20;Le bruit le distrait de son envie de vous carboniser.

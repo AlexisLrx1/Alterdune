@@ -28,6 +28,7 @@ private:
 
 public:
     Joueur(string n);
+    void recevoirDegats(int degats) override;
     void AjouterItem(Item item);
     void UtiliserItem(int index, Entite* cible);
     void AfficherStats();

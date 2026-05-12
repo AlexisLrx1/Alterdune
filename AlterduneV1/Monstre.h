@@ -19,6 +19,7 @@ private:
 public:
 
     Monstre(string cat, string nom, int h, int f, int d, int mGoal , int xp);
+    void recevoirDegats(int degats) override;
     void modifierMercy(int valeur); 
     bool estEpargnable() const;
     void ajouterAction(string idAction);

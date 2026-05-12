@@ -69,7 +69,7 @@ void Combat::afficherMenuCombat()
 
 void Combat::menuAttaque()
 {
-    int degats = rand() % (monstre.getHPMax() + 1);
+    int degats = rand() % (monstre.getHPMax()+ 1) + joueur.getForce() / 4;
     monstre.recevoirDegats(degats);
     cout << "Vous attaquez et faites " << degats << " points de dégats" << endl;
     if (monstre.getHP() <= 0)
@@ -96,31 +96,40 @@ void Combat::menuAttaque()
 
 void Combat::menuAct()
 {
-    string choix;
-    cout << "\nVoici les actions disponibles : " << endl;
-    cout << "INSULT, PRIER, MIAM, BOITER, AGENOUILLER, MENACER" << endl;
-    cout << "IMMOBILE, BOULEDENEIGE, CAILLOU, GRRRGAGAGAG, CRIER, MOOH, GLAGLA, GROIN" << endl;
-    cout << "\nQuelle action faire ? (Ecrivez le nom en MAJUSCULE) : ";
-    cin >> choix;
     string nomMonstre = monstre.getName();
 
-    if (tableActions[nomMonstre].count(choix)) {
-
-        ResultatAction res = tableActions[nomMonstre][choix];
-        cout << "\n" << res.message << endl;
-        monstre.modifierMercy(res.points);
-
-        if (res.points > 0) {
-            cout << "[MERCY + " << res.points << "] Le monstre semble sensible a votre action." << endl;
-        } else if (res.points < 0) {
-            cout << "[MERCY " << res.points << "] Oups... Il n'a pas aime du tout !" << endl;
-        }
-    } 
-    else {
-        cout << "\nVous tentez " << choix << "... mais le " << nomMonstre << " vous regarde bizarrement." << endl;
-        cout << "Ca n'a aucun effet." << endl;
+    if (tableActions.find(nomMonstre) == tableActions.end() || tableActions[nomMonstre].empty()) {
+        cout << "\nCe monstre ne semble pas réactif à vos paroles..." << endl;
+        return;
     }
+
+    cout << "\nVoici les actions possibles face à " << nomMonstre << " :" << endl;
+    vector<string> actionsDisponibles;
+    for (auto const& [nomAction, resultat] : tableActions[nomMonstre]) {
+        actionsDisponibles.push_back(nomAction);
+        cout << actionsDisponibles.size() << ". " << nomAction << endl;
+    }
+
+    cout << "\nQuelle action choisis-tu ? (Entrez le numéro) : ";
+    int choixNum;
+    if (!(cin >> choixNum) || choixNum < 1 || choixNum > actionsDisponibles.size()) {
+        cout << "Vous hésitez et ne faites rien..." << endl;
+        cin.clear();
+        cin.ignore(10000, '\n');
+        return;
+    }
+    string actionChoisie = actionsDisponibles[choixNum - 1];
+    ResultatAction res = tableActions[nomMonstre][actionChoisie];
+    cout << "\n--- " << actionChoisie << " ---" << endl;
+    cout << res.message << endl;
     
+    monstre.modifierMercy(res.points);
+    if (res.points > 0) {
+        cout << GREEN << "[MERCY +" << res.points << "] Le monstre est touché par votre geste !" << RESET << endl;
+    } else if (res.points < 0) {
+        cout << RED << "[MERCY " << res.points << "] Aïe... Il n'a pas du tout apprécié." << RESET << endl;
+    }
+
 }
 void Combat::menuItems() 
 {
@@ -159,7 +168,7 @@ void Combat::Fuite()
 void Combat::tourMonstre()
 {
     cout << "\nC'est au tour du monstre !" << endl;
-    int degats =  rand() % (joueur.getHPMax()  /  4 + 1) + joueur.getForce() / 2;
+    int degats =  rand() % (joueur.getHPMax()  /  4 + 1) + monstre.getForce() / 2;
     joueur.recevoirDegats(degats);
 }
 
@@ -193,7 +202,7 @@ void Combat::afficherBarreSimple(int actuel, int max, string couleurFond) {
     for (int i = 0; i < remplissage; i++) {
         cout << " "; 
     }
-    cout << BG_GRAY; // Fond gris pour la partie vide
+    cout << BG_GRAY; 
     for (int i = 0; i < (largeurBarre - remplissage); i++) {
         cout << " "; 
     }

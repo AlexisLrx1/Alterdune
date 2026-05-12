@@ -12,9 +12,39 @@ Joueur::Joueur(string n) : Entite(n, 100, 80, 10, 5) {
     MonstresFuit = 0;
     nbVictoires = 0;
 }
+void Joueur::recevoirDegats(int degats)
+ {
+    if (degats <= defense) 
+    {
+        cout << name << " a bloqué l'attaque ..." << endl;
+        hp -= 0;
+        return;
+    }
+    hp -= degats - defense;
+    if (hp < 0) 
+    {
+        hp = 0;
+    }
+    if (hp < 0)
+     {
+        hp = 0;
+    }
+    if (degats == 0) 
+    {
+        cout << name << " a esquive l'attaque !" << endl;
+    } 
+    else
+    {
+        cout << RED << name << " a recu " << degats << " points de degats." << RESET << endl;
+    }
+    if (hp == 0) 
+    {
+        cout << RED << name << " est hors d'état de nuire!" << RESET << endl;
+    }
+}
 void Joueur::AfficherStats() 
 {
-    cout << "\n=== STATISTIQUES DE " << name << " ===" << endl;
+    cout << "\n Statistique du joueur : " << name << " " << endl;
     cout << "Niveau : " << niveau << " | HP : " << hp << "/" << hpMax << " | MP : " << mp << "/" << mpMax << endl; 
     cout << "Force : " << force << " | Défense : " << defense << endl;
     cout << "Victoires : " << nbVictoires << "/10" << endl; 
@@ -24,7 +54,7 @@ void Joueur::AfficherStats()
 }
 void Joueur::AfficherInventaire()
 {
-    cout << "\n=== INVENTAIRE (" << inventaire.size() << "/20) ===" << endl; 
+    cout << "\nInventaire : (" << inventaire.size() << "/20)" << endl; 
     if (inventaire.empty())
      {
         cout << "Votre sac est vide." << endl;
@@ -48,14 +78,14 @@ void Joueur::UtiliserItem(int index, Entite* cible) {
      {
         hp += item.valeur;
         if (hp > hpMax) hp = hpMax;
-        cout << "Vous utilisez " << item.nom << " et recuperez " << item.valeur << " HP !" << endl;
+        cout << "Vous utilisez " << item.nom << " et récuperez " << item.valeur << " PV !" << endl;
     }
     if (item.type == "SPELL" ) 
     {
         if (mp >= 50) 
         { 
             mp -= 50; 
-            cout << "Vous lancez " << item.nom << " ! (MP restant : " << mp << ")" << endl;
+            cout << "Vous lancez " << item.nom << " ! (Mana restant : " << mp << ")" << endl;
 
             if (cible) 
             {
@@ -65,7 +95,7 @@ void Joueur::UtiliserItem(int index, Entite* cible) {
         } 
         else 
         {
-            cout << RED << "Pas assez de MP ! (Requis : 50 | Actuel : " << mp << ")" << RESET << endl;
+            cout << RED << "Pas assez de Mana ! (Requis : 50 | Actuel : " << mp << ")" << RESET << endl;
             return;
         }
 
@@ -82,7 +112,7 @@ void Joueur::gagnerCombat(bool estTue) {
     if (estTue) 
     {
         nbMeurtres++;
-        cout << "Vous avez elimine un ennemi." << endl;
+        cout << "Vous avez éliminé un ennemi." << endl;
     } 
     else 
     {
@@ -94,12 +124,12 @@ void Joueur::gagnerCombat(bool estTue) {
 
 void Joueur::AjouterItem(Item item) {
     inventaire.push_back(item);
-    cout << "Objet ajoute : " << item.nom << endl;
+    cout << "Objet ajouté : " << item.nom << endl;
 }
 void Joueur::ajouterXP(int montant)
  {
     xp += montant;
-    cout << "Vous gagnez " << montant << " points d'experience ! (Total: " << xp << ")" << endl;
+    cout << "Vous gagnez " << montant << " points d'expérience ! (Total: " << xp << ")" << endl;
     
     
     if (xp >= niveau * 100) {

@@ -19,7 +19,7 @@ protected:
 public:
     Entite(string n, int h, int m, int f, int d);
     virtual ~Entite() {}
-    virtual void recevoirDegats(int degats);
+    virtual void recevoirDegats(int degats) = 0 ;
 
     string getName() const 
     { 
